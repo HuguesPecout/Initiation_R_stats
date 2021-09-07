@@ -1077,9 +1077,7 @@ mon_tableau$new_var <- ... ?
 
 ## Sélection par attributs
 
-Comme pour toutes les opérations dans R, **il existe plusieurs solutions**. Exemple :
-
-### Méthode 1 - Base
+Pour sélectionner des lignes et des colonnes dans un `data.frame` nous pouvons utiliser les crochets (`df[criteres_de_selection_des_lignes,  criteres_de_selection_des_colonnes]`)
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
 
@@ -1088,27 +1086,10 @@ mtcars[mtcars$cyl==4 & mtcars$wt > 3,  c(1:7) ]
 
 ```
 
-### Méthode 2 - Fonction primitive
+Ici nous sélectionnons les lignes de `mtcars` où la variable "cyl" est égale à 4 et la variable "wt" est supérieure à 3 et nous ne gardons que les 7 premières colonnes. 
 
-```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
+Il est aussi possible d'utiliser la fonction `subset()` ou le package `dplyr`. 
 
-# subset()
-subset(mtcars, cyl==4 & mtcars$wt > 3, select=c(1:7))
-
-```
-
-### Méthode 3 - Package dplyr
-
-```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
-
-# filter() du package 'dplyr'
-library(dplyr)
-mtcars %>% 
-  select(1:6) %>%
-  filter(cyl==4, wt > 3)
-
-
-```
 
 <br/>
 
@@ -1183,43 +1164,21 @@ by.y=
 
 ## Regroupement
 
-**Le regroupement de ligne est une opération récurrente en gestion de base de données**. Plusieurs solutions sont possibles :
+**Le regroupement de lignes est une opération classique en gestion de base de données**. 
 
-### Méthode 1 - Fonction primitive
+Nous pouvons utiliser la fonction `aggregate()` : 
 
-```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
-
-# Regroupement des lignes en fonction des valeurs des variables "disp" et "cyl"
-# + somme des valeurs de la variable "vs"
-aggregate(data = mtcars, disp ~ cyl + vs, sum)
-
-```
-
-### Méthode 2 - Package tidyverse
 
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
 
-# Package dplyr
-# Permet facilement le calcul sur plusieurs champs
-library(dplyr)
-mtcars %>% 
-  group_by(cyl, vs) %>% 
-  summarise(sum_disp=sum(disp), 
-            moy_hp=mean(hp), 
-            nb_element=length(cyl))
+# moyenne des valeurs de la variable mpg en fonction des valeurs de la variables "cyl"
+aggregate(x = mtcars$mpg, by = list(cyl = mtcars$cyl), FUN = mean)
 
 ```
 
-### Méthode 2 - Package data.table
+Il est aussi possible d'utiliser les packages `dplyr` ou `data.table`.
 
-```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
-
-library(data.table)
-mtcars2 <- data.table(mtcars)
-mtcars2[, .( sum_disp=sum(disp), moy_hp=mean(hp), nb_element=length(cyl) ), by=list(cyl, vs)]
-
-```
 
 <br/>
 
@@ -1240,8 +1199,7 @@ sum()
 # Une solution
 aggregate()
 
-# Nom des variables à utiliser
-P16_POP ~ CATAEU2010
+# Nom des variables à utiliser : "P16_POP" et "CATAEU2010"
 
 ```
 
@@ -1492,8 +1450,8 @@ Il est possible de combiner l'**utilisation des expressions régulières avec to
 emails_list <- c("hugues.pecout@cnrs.fr", 
                  "hugues@gmail", 
                  "blabla.com", 
-                 "hugues.pecout@gis-cist.fr",
-                 "timothée.giraud@cnrs.fr")
+                 "hugues.pecout@gis-vist.fr",
+                 "timothée.giraud@cmrs.fr")
 
 
 # Expression regex qui répond aux adresses email
@@ -1882,6 +1840,15 @@ Centiles : valeurs qui divisent la série statistique en cent (1% à 99%)<br/>
 
 </p></div>
 
+
+
+<br/>
+
+<p class="titre_def">Amplitude</p>
+
+<div class="div_def"><p class="def">Longueur de l'intervalle entre la valeur minimum et maximum.</p></div>
+
+
 <br/>
 
 
@@ -1928,13 +1895,6 @@ $$CV = \frac{\sigma }{\mu } $$
 
 
 </div>
-
-
-<br/>
-
-<p class="titre_def">Amplitude</p>
-
-<div class="div_def"><p class="def">Longueur de l'intervalle entre la valeur minimum et maximum.</p></div>
 
 <br/>
 
@@ -2052,15 +2012,14 @@ Pour **représenter graphiquement votre table de fréquence** :
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
 
-# Utilisation d'une librairie de palettes de couleur
-# install.packages("RColorBrewer")
-library("RColorBrewer")
+# Création d'un vecteur de couleurs
+cols <- hcl.colors(n = 9, palette = "Dynamic")
 
 # Diagramme circulaire (Pas optimal...)
-pie(table(hdv2003$occup), col=brewer.pal(n = 9,  "Paired"))
+pie(table(hdv2003$occup), col = cols)
 
 # Histogramme
-barplot(table(hdv2003$occup), col=brewer.pal(n = 9,  "Paired"), las=2 ,cex.names=0.6)
+barplot(table(hdv2003$occup), col = cols, las=2, cex.names = 0.6)
 
 ```
 
@@ -2362,7 +2321,7 @@ library(sf)
 mtq <- st_read("data/martinique.shp")
 
 # Import des données de recensement
-mtq_data <- read.csv("data/INSEE_COM_972.csv", header=TRUE, sep=",", stringsAsFactors=FALSE)
+mtq_data <- read.csv("data/INSEE_COM_972.csv", header=TRUE, sep=",")
 
 # Jointure shapefile - data
 mtq <-  merge(mtq , mtq_data , by.x="INSEE_COM" , by.y="CODGEO")
@@ -2376,12 +2335,12 @@ ma_discretisation <- mf_get_breaks(mtq$POPDENS, breaks = "quantile")
 
 2) cartographie :
 
-```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE, eval=TRUE}
+```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE, eval=TRUE, fig.width=5.5}
 
 library(mapsf)
 
 # Choix d'un thème graphique
-mf_theme("iceberg")
+mf_theme("dark")
 
 # Carte par aplat de couleur
 mf_map(x = mtq, 
