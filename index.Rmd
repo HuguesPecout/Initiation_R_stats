@@ -1,12 +1,12 @@
 ---
 title: "Introduction à R"
 subtitle: "Statistique descriptive univariée et bivariée"
-date: "Master G2M, 6-8 septembre 2021"
+date: "Master G2M, 5-7 septembre 2022"
 author: 
  - name: Hugues Pecout
    affiliation: FR CIST, CNRS
  - name: Timothée Giraud
-   affiliation: UMS RIATE, CNRS
+   affiliation: UAR RIATE, CNRS
 image: "featured.png"   
 logo: "figures/rzine.png"  
 output:
@@ -20,9 +20,8 @@ bibliography: biblio.bib
 nocite: |
   @*
 link-citations: true
-licence: "[![licensebuttons by-sa](https://licensebuttons.net/l/by-sa/3.0/88x31.png)](https://creativecommons.org/licenses/by-sa/4.0)"
+licence: "![licensebuttons by-sa](https://licensebuttons.net/l/by-sa/4.0/88x31.png)"  
 giturl: "[![Code source on GitHub](https://badgen.net/badge/Code%20source%20on%20/GitHub/blue?icon=github)](https://github.com/HuguesPecout/Initiation_R_stats)"
-#doi: "[![DOI:xxx](https://zenodo.org/badge/DOI/xxx.svg)](https://doi.org/xxx)"
 --- 
 
 ```{r klippy, echo=FALSE, include=TRUE}
@@ -47,11 +46,11 @@ options("scipen" = 10)
 
 <center>**DIAPORAMA D'INTRODUCTION** : </center>
 <br/>
-<center>[Contextualisation et présentation de R et Rstudio](https://huguespecout.github.io/R_presentation_FR/#/) </center>  
+<center>[Contextualisation et présentation de R et RStudio](https://huguespecout.github.io/R_presentation_FR/#/) </center>  
 <br/>
 <center><img src="figures/diapo.png" width="170"/></center>
 <br/>
-<center>Bonus : [Base du langage, packages, Rstudio et documentation](https://huguespecout.github.io/Intro_R_Rstudio_FR/#/)</center>
+<center>Bonus : [Base du langage, packages, RStudio et documentation](https://huguespecout.github.io/Intro_R_Rstudio_FR/#/)</center>
 
 
 
@@ -66,7 +65,7 @@ rank_data <- html_text(td)
 
 vec <- c(NULL)
 for (t in seq(1,length(rank_data),3))  {
-vec <-  c(vec, rank_data[t])
+  vec <-  c(vec, rank_data[t])
 }
 
 library(stringr)
@@ -91,7 +90,7 @@ nb_function_base <- length(c(lsf.str("package:base"), lsf.str("package:graphics"
 
 # Quelques fondamentaux
 
-## L'interface Rstudio
+## L'interface RStudio
 
 **L'interface de RStudio se présente sous la forme d’une unique fenêtre découpée en quatre zones** que l’on peut redimensionner, masquer ou maximiser selon ses préférences :
 
@@ -148,7 +147,7 @@ RStudio propose de nombreux raccourcis clavier intéressants, exemple :
 
 ## Paramètres généraux
 
-Pour éviter des problèmes d'encodage des scripts ou le chargement incessant de données à chaque nouvelle instance de Rstudio, **il est nécessaire de modifier certains paramètres globaux**. Pour cela, cliquez sur "*tools*" puis sur "*Global Options*" pour ouvrir la fenêtre des paramètre généraux de Rstudio. 
+Pour éviter des problèmes d'encodage des scripts ou le chargement incessant de données à chaque nouveau démarrage de RStudio, **il est nécessaire de modifier certains paramètres globaux**. Pour cela, cliquez sur "*tools*" puis sur "*Global Options*" pour ouvrir la fenêtre des paramètre généraux de RStudio. 
 
 
 Dans un premier temps, **décochez les options de restauration et de sauvegarde de données** à l'ouverture et à la fermeture de session :
@@ -523,13 +522,16 @@ colSums(ma_matrice)
 ID <-seq(1:10)
 # Création d'un vecteur de lettres (a à j)
 name <-letters[1:10]
-latitude <- c(48.84905, 48.85217, 48.83349, 48.86528, 48.86409, 48.85176, 48.85207, 48.88334, 48.85758, 48.87391)
-longitude <- c(2.331454, 2.347332, 2.318518, 2.371150, 2.356515, 2.299024, 2.358712, 2.333936, 2.352751, 2.343179)
+latitude <- c(48.84905, 48.85217, 48.83349, 48.86528, 48.86409, 
+              48.85176, 48.85207, 48.88334, 48.85758, 48.87391)
+longitude <- c(2.331454, 2.347332, 2.318518, 2.371150, 2.356515, 
+               2.299024, 2.358712, 2.333936, 2.352751, 2.343179)
 
 mes_donnees <- data.frame(ID, name, latitude, longitude)
 
 library(sf)
-mes_donnees_SF <- st_as_sf(mes_donnees, coords = c("longitude", "latitude"), crs = 4326, agr = "constant")
+mes_donnees_SF <- st_as_sf(mes_donnees, coords = c("longitude", "latitude"), 
+                           crs = 4326)
 mes_donnees_SF
 
 # Interroger un objet sf
@@ -617,20 +619,18 @@ my_factor[7:13, drop=TRUE]
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE, eval=FALSE}
 
-  <    # inférieur à 
-  >    # supérieur à 
-  <=   # inférieur ou égal à 
-  >=   # supérieur ou égal à 
-  ==   # égal 
-  !=   # différent 
-  %in% # Test de présence entre deux vecteurs
-  
-  ```  
+<    # inférieur à 
+>    # supérieur à 
+<=   # inférieur ou égal à 
+>=   # supérieur ou égal à 
+==   # égal 
+!=   # différent 
+%in% # Test de présence entre deux vecteurs
+```  
 
 
 
-```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}   
-
+```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
 # Exemple
 5 == 5
 5 != 5
@@ -645,14 +645,14 @@ c(1,2,3) %in% c(2,7,5)
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE, eval=FALSE}
 
-  !         # Négation
-  &, &&     # ET 
-  |, ||     # OU inclusif
-  xor(,)    # OU exclusif (retournera TRUE si l'une ou l'autre mais pas les deux sont vraies)
-  is.na()   # Valeur manquante ?
-  is.null() # Valeur Null ?
-  is.character() # Caractère ?
-  is.numeric() # Numérique ?
+!         # Négation
+&, &&     # ET 
+|, ||     # OU inclusif
+xor(,)    # OU exclusif (retournera TRUE si l'une ou l'autre mais pas les deux sont vraies)
+is.na()   # Valeur manquante ?
+is.null() # Valeur Null ?
+is.character() # Caractère ?
+is.numeric() # Numérique ?
 
 ```
 
@@ -741,14 +741,14 @@ remove.packages("mapsf")
 
 ```
 
- 
+
 <br/>
 
 
 
 ## Aide et documentation
 
-Il y a plusieurs façons d'obtenir de l'aide avec R studio. **Vous pouvez utiliser l'onglet d'aide proposé par Rstudio** et accéder à la documentation d'une fonction :
+Il y a plusieurs façons d'obtenir de l'aide avec R. **Vous pouvez utiliser l'onglet d'aide proposé par RStudio** et accéder à la documentation d'une fonction :
 
 <p class="center">![](figures/onglet_aide.png)
 </p>
@@ -893,15 +893,14 @@ Pour que l'import soit correct, il est souvent nécessaire de renseigner un cert
 
 **header** = valeur logique qui indique si la première ligne du fichier importé contient les noms des variables.<br/>
 **sep** = Indique le séparateur de champ du fichier.<br/>
-**stringsAsFactor** = Le données de type caractère sont transformées (par défaut) en facteur.<br/>
 **Encoding** = Indique l'encodage utilisé pour les chaînes de caractères.<br/>
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE,eval=FALSE}
 
 # Import d'un fichier 
 # not run
-Mon_Objet <- read.table("/data/user/documents/mes.donnes.csv"), header=TRUE, sep=",", 
-stringsAsFactors=FALSE, encoding="UTF-8")
+Mon_Objet <- read.table("/data/user/documents/mes.donnes.csv", 
+                        header=TRUE, sep=",", encoding="UTF-8")
 
 ```
 
@@ -935,8 +934,8 @@ write.csv(Mon_Objet, file = "MyData.csv")
 write.xlsx(Mon_Objet, "c:/mydata.xlsx")
 
 # format sas, spss... -> library(foreign)
-write.foreign(Mon_Objet, "c:/mydata.txt", "c:/mydata.sas",   package="SAS")
-write.foreign(Mon_Objet, "c:/mydata.txt", "c:/mydata.sps",   package="SPSS")
+write.foreign(Mon_Objet, "c:/mydata.txt", "c:/mydata.sas", package="SAS")
+write.foreign(Mon_Objet, "c:/mydata.txt", "c:/mydata.sps", package="SPSS")
 
 # format shape
 st_write()
@@ -980,8 +979,6 @@ read.table()
 # Quelques arguments utiles...
 header=TRUE
 sep=","
-stringsAsFactors=FALSE
-
 ```
 
 <br/>
@@ -1004,7 +1001,7 @@ str(mtcars)
 
 ```
 
-Ces deux fonctions sont directement accessibles en clic-bouton depuis l'interface Rstudio. Il suffit de cliquer sur l'objet dans l'onglet *Environnement* situé en haut à droite de l'IDE Rstudio (équivalent à <span style="color:#8C001A">View()</span>) ou sur la flèche à gauche du nom de l'objet (équivalent à <span style="color:#8C001A">str()</span>).
+Ces deux fonctions sont directement accessibles en clic-bouton depuis l'interface RStudio. Il suffit de cliquer sur l'objet dans l'onglet *Environnement* situé en haut à droite de l'IDE RStudio (équivalent à <span style="color:#8C001A">View()</span>) ou sur la flèche à gauche du nom de l'objet (équivalent à <span style="color:#8C001A">str()</span>).
 
 <center>![](figures/mtcars.png)</center>
 
@@ -1070,14 +1067,15 @@ Mon_Objet$xxxx <- as.character(Mon_Objet$xxxx)
 
 # Assigner les valeur dans une nouvelle colonne
 mon_tableau$new_var <- ... ?
-
+  
 ```
 
 <br/>
-
+  
 ## Sélection par attributs
-
-Pour sélectionner des lignes et des colonnes dans un `data.frame` nous pouvons utiliser les crochets (`df[criteres_de_selection_des_lignes,  criteres_de_selection_des_colonnes]`)
+  
+Pour sélectionner des lignes et des colonnes dans un `data.frame` nous pouvons utiliser les crochets :   
+`df[criteres_de_selection_des_lignes,  criteres_de_selection_des_colonnes]`
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
 
@@ -1517,7 +1515,7 @@ Toute **une série d'arguments permet d'ajuster les représentations**, exemple 
 - **type** : Argument qui contrôle le type d'axe produit ("p"= points, "l" = ligne, "o" = point relier par ligne...)           
 - ...      
 
-**Plusieurs éléments peuvent être superposés en utilisant l'argument** "***add =TRUE***"), ex :                   
+**Plusieurs éléments peuvent être superposés**, par exemple :                   
 - <span style="color:#8C001A">**text()**</span> : Ajouter du texte            
 - <span style="color:#8C001A">**legend()**</span> : Ajouter un légende                   
 - <span style="color:#8C001A">**abline()**</span> : Ajouter une ligne               
@@ -1540,7 +1538,7 @@ boxplot(mtcars$wt, main="Graph 4")
 
 ```
 
-### Plot(sf)
+### Affichage d'objets spatiaux
 
 La fonction <span style="color:#8C001A">plot()</span> permet l'affichage d'un objet <span style="color:#4B0082">sf</span> (couche géographique) dans la fenêtre graphique.
 
@@ -1582,7 +1580,7 @@ plot(mtq["POP"])
 
 Il existe de **très nombreux** package **pour réaliser des représentations graphiques** (point fort du langage R).
 
-**Le plus célèbre est** <span style="color:#4B0082">**ggplot2**</span>. Il permet de réaliser de très nombreux types de représentation graphique. Ce package est développé par Hadley Wickham (Rstudio) et **fonctionne avec un syntaxe particulière basée sur la** ***grammaire des graphiques***, théorisée par **Leland Wilkinson**. Exemple :
+**Le plus célèbre est** <span style="color:#4B0082">**ggplot2**</span>. Il permet de réaliser de très nombreux types de représentation graphique. Ce package est développé par Hadley Wickham (RStudio) et **fonctionne avec un syntaxe particulière basée sur la** ***grammaire des graphiques***, théorisée par **Leland Wilkinson**. Exemple :
 
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
@@ -1591,12 +1589,12 @@ library(ggplot2)
 
 # Exemple : Density plots
 ggplot(mpg, aes(cty)) +
-  geom_density(aes(fill=factor(cyl)), alpha=0.8) + 
-  labs(title="Density plot", 
-       subtitle="City Mileage Grouped by Number of cylinders",
-       caption="Source: data R mtcars",
-       x="City Mileage",
-       fill="# Cylinders")
+  geom_density(aes(fill = factor(cyl)), alpha = 0.8) + 
+  labs(title = "Density plot", 
+       subtitle = "City Mileage Grouped by Number of cylinders",
+       caption = "Source: data R mtcars",
+       x = "City Mileage",
+       fill = "# Cylinders")
 
 ```
 
@@ -1671,7 +1669,7 @@ mon_objet_new <- readRDS("Nom_du_fichier")
 ### Exercice
 
 
-**Sauvegardez votre objet <span style="color:#4B0082">sf</span> joint aux données de recensement dans le répertoire de votre projet Rstudio**.
+**Sauvegardez votre objet <span style="color:#4B0082">sf</span> joint aux données de recensement dans le répertoire de votre projet RStudio**.
 
 ```{r class.source="bg-danger", warning=FALSE, message=FALSE, eval=FALSE}
 
@@ -1681,7 +1679,7 @@ saveRDS()
 ```
 
 
-Puis, **supprimez tous les objets chargés dans votre environnement Rstudio**
+Puis, **supprimez tous les objets chargés dans votre environnement RStudio**
 
 ```{r class.source="bg-danger", warning=FALSE, message=FALSE, eval=FALSE}
 
@@ -1690,7 +1688,7 @@ rm() et ls()
 
 ```
 
-Enfin, **rechargez l'objet enregistré en dur** dans votre environnement Rstudio:
+Enfin, **rechargez l'objet enregistré en dur** dans votre environnement RStudio:
 
 ```{r class.source="bg-danger", warning=FALSE, message=FALSE, eval=FALSE}
 
@@ -1943,7 +1941,7 @@ $$Y_{i} =\frac{X_{i} - \bar{x}}{\sigma^x }$$
 
 
 </div>
-   
+
 <br/>
 
 
@@ -1966,7 +1964,7 @@ library(questionr)
 data(hdv2003)
 ```
 
-**Prenez quelques minutes pour explorer ce tableau de données**. Vous pouvez utiliser l'interface Rstudio, mais également un certain nombre de fonctions primitives :
+**Prenez quelques minutes pour explorer ce tableau de données**. Vous pouvez utiliser l'interface RStudio, mais également un certain nombre de fonctions primitives :
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE,eval=FALSE}
 
@@ -1998,12 +1996,15 @@ Sous R, le procédé est différent selon le type de variable étudié :
 Utilisez les fonctions <span style="color:#8C001A">**table()**</span> ou <span style="color:#8C001A">**prop.table()**</span> :
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
-
 # Nb d'individus par modalité
-table(hdv2003$occup)
+tab_occup <- table(hdv2003$occup)
+tab_occup
+# trier les modalités en fonction de leur fréquence
+tab_occup <- sort(tab_occup, decreasing = TRUE)
+tab_occup
 
 # Effectifs relatifs (%)
-prop.table(table(hdv2003$occup))
+prop.table(tab_occup)
 
 ```
 
@@ -2016,11 +2017,10 @@ Pour **représenter graphiquement votre table de fréquence** :
 cols <- hcl.colors(n = 9, palette = "Dynamic")
 
 # Diagramme circulaire (Pas optimal...)
-pie(table(hdv2003$occup), col = cols)
+pie(tab_occup, col = cols)
 
 # Histogramme
-barplot(table(hdv2003$occup), col = cols, las=2, cex.names = 0.6)
-
+barplot(tab_occup, col = cols, las=2, cex.names = 0.6)
 ```
 
 <br/>
@@ -2206,7 +2206,9 @@ Pour discrétiser une série statistique, vous pouvez utiliser la **fonction** *
 # install.packages("mapsf")
 library(mapsf)
 
-ma_discretisation <- mf_get_breaks(mtcars$hp, breaks = "quantile", nbreaks = 6)
+ma_discretisation <- mf_get_breaks(x = mtcars$hp, 
+                                   breaks = "quantile", 
+                                   nbreaks = 6)
 ma_discretisation
 
 ```
@@ -2214,25 +2216,29 @@ ma_discretisation
 Vous pouvez choisir différentes méthodes de discrétisation avec l'argument '*breaks*'.
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE, eval = FALSE}
-
 # Pour accéder à la documentation de la fonction :
 ?mf_get_breaks
-
 ```
+
 
 Pour **enregistrer l'appartenance des individus aux différentes classes en fonction de la discrétisation**, procédez de la manière suivante :
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE, eval = TRUE}
-
+hist(mtcars$hp)
 # Calcul des borne de classe
-ma_discretisation <- mf_get_breaks(mtcars$hp, breaks = "sd")
+ma_discretisation <- mf_get_breaks(x = mtcars$hp, 
+                                   breaks = "quantile", 
+                                   nbreaks = 5)
 
 # Utiliser la fonction cut()
-mtcars$hp_classe <- cut(mtcars$hp, ma_discretisation,  include.lowest = TRUE, right = TRUE)
+mtcars$hp_classe <- cut(x = mtcars$hp, 
+                        breaks = ma_discretisation, 
+                        include.lowest = TRUE, 
+                        right = TRUE)
 mtcars$hp_classe 
 
 # Changement des nom de classe
-levels(mtcars$hp_classe)<-c("A","B","C","D","E","F","G","H","I")
+levels(mtcars$hp_classe)<-c("A","B","C","D","E")
 mtcars$hp_classe
 
 # Visualiser le nombre d'éléments par classe - table()
@@ -2305,14 +2311,14 @@ Plusieurs packages permettent de faire des carte avec R, **le package** **<span 
 <p class="center">
 <img src="figures/carto.png" alt="drawing" style="width:300px;"/>
 </p>
-<p align="center"> Source : https://riatelab.github.io/mapsf/index.html</p>
+<p align="center"> Source : https://riatelab.github.io/mapsf</p>
 
 <br/>
 
 **Un exemple d'utilisation...**
 
 
-1) Préparation des données :
+1. Préparation des données :
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE, include=TRUE}
 
@@ -2333,7 +2339,7 @@ mtq$POPDENS <- 1e6 * mtq$P16_POP / st_area(mtq)
 ma_discretisation <- mf_get_breaks(mtq$POPDENS, breaks = "quantile")
 ```
 
-2) cartographie :
+2. Cartographie :
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE, eval=TRUE, fig.width=5.5}
 
@@ -2355,9 +2361,8 @@ mf_map(x = mtq,
 
 # Mikse en page
 mf_layout(title = "Population Distribution in Martinique", 
-          credits = paste0("Sources: Insee and IGN, 2018\n",
-                           "mapsf ", 
-                           packageVersion("mapsf")))
+          credits = paste0("Sources : Insee and IGN, 2018\n",
+                           "Auteur :  TG & HP, 2022"))
 
 ```
 
@@ -2377,36 +2382,37 @@ mf_layout(title = "Population Distribution in Martinique",
 
 3) **Sélectionnez uniquement ces variables** et créez un nouveau dataframe :     
 
-    - Code insee de la commune (**CODGEO**)    
-    - Nom de la commune (**LIBGEO**)    
-    - Libellé aire urbaine (**LIBAU2010**)    
-    - Catégorie commune dans aire urbaine (**CATAEU2010**)    
-    - Population total en 2016 (**P16_POP**)    
-    - Nombre de personnes de 15 ans et plus en 2016 (**C16_POP15P**)    
-    - Nombre d'agriculteurs et exploitants de 15 ans et plus (**C16_POP15P_CS1**)    
-    - Nombre de retraités de 15 ans et plus (**C16_POP15P_CS7**)    
+  - Code insee de la commune (**CODGEO**)    
+  - Nom de la commune (**LIBGEO**)    
+  - Libellé aire urbaine (**LIBAU2010**)    
+  - Catégorie commune dans aire urbaine (**CATAEU2010**)    
+  - Population total en 2016 (**P16_POP**)    
+  - Nombre de personnes de 15 ans et plus en 2016 (**C16_POP15P**)    
+  - Nombre d'agriculteurs et exploitants de 15 ans et plus (**C16_POP15P_CS1**)    
+  - Nombre de retraités de 15 ans et plus (**C16_POP15P_CS7**)    
 <br/>
 
 4) **Créez une nouvelle variable : la part de la population d'agriculteurs et exploitants dans la population active**, et **nommez cette nouvelle variable** ***TX_CS1_2016***
 
-    - Quel est le taux minimum ?  
-    - Quel est le taux maximum ?  
-    - Quel est l'amplitude de la variable ?   
-    - Quelle est la moyenne ? 
-    - Quelle indicateur divise la série statistique en deux ? Quelle est sa valeur ?   
-    - Quel est son écart-type, son intervalle interquartile ?   
-    - **Représentez graphiquement la distribution** ? (plusieurs solutions sont possibles)       
+  - Quel est le taux minimum ?  
+  - Quel est le taux maximum ?  
+  - Quel est l'amplitude de la variable ?   
+  - Quelle est la moyenne ? 
+  - Quelle indicateur divise la série statistique en deux ? Quelle est sa valeur ?   
+  - Quel est son écart-type, son intervalle interquartile ?   
+  - **Représentez graphiquement la distribution** ? (plusieurs solutions sont possibles)       
 <br/>
 
 
-5) **Discrétisez la variable** ***TX_CS1_2016***. Quelle méthode choisissez-vous ? Pourquoi ?     
+5) **Discrétisez la variable** ***TX_CS1_2016***.   
+  Quelle méthode choisissez-vous ? Pourquoi ?     
 <br/>
 
-6) **Créez une variable qualitative à partir des valeurs de la variable** ***TX_CS1_2016**. Plusieurs solutions sont possible, exemple :
+6) **Créez une variable qualitative à partir des valeurs de la variable** ***TX_CS1_2016***. Plusieurs solutions sont possible, exemple :
 
-- Utiliser la fonction <span style="color:#8C001A">cut()</span> 
-- Utiliser un opérateur relationnel... (si TX_CS1_2016 < ..., alors CAT_CS1_2016 == "FAIBLE"...)       
-<br/>
+  - Utiliser la fonction <span style="color:#8C001A">cut()</span> 
+  - Utiliser un opérateur relationnel... (si TX_CS1_2016 < ..., alors CAT_CS1_2016 == "FAIBLE"...)       
+  <br/>
 
 7) **Réaliser une jointure entre la couche géographique de la Martinique et le tableau de données INSEE**.        
 <br/>
@@ -2491,12 +2497,6 @@ table(hdv2003$sport, hdv2003$qualif)
 
 ```
 
-```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE, eval=FALSE}
-
-# Croiser trois variables ou plus
-table(hdv2003$sport, hdv2003$cuisine, hdv2003$sexe)
-
-```
 
 <br/>
 
@@ -2504,7 +2504,7 @@ Il est cependant difficile de comparer à partir des effectifs. **Le package** *
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
 
-# Pourcentage en ligne d'un tableau croisé table(), avec lprop() du package 'questionnr'
+# Pourcentage en ligne d'un tableau croisé table(), avec rprop() du package 'questionnr'
 rprop(table(hdv2003$sport, hdv2003$cuisine))
 
 # Pourcentage en colonne d'un tableau croisé table(), avec cprop() du package 'questionnr'
@@ -2807,17 +2807,17 @@ boxplot(hdv2003$heures.tv ~ hdv2003$qualif,
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
 
 # Construction du tableau croisé, en format data.frame
-tab <- as.data.frame(lprop(table(hdv2003$sport, hdv2003$age)))
+tab <- as.data.frame(lprop(table(hdv2003$sport, hdv2003$age), 
+                           total = FALSE))
 colnames(tab) <- c("sport", "age", "Freq")
-tab <-  subset(tab , !(sport %in% "Ensemble"))
 
 # Utilisation de la fonction ggplot()
 library(ggplot2)
-ggplot(tab , aes(x = age, y = Freq, fill = factor(sport))) +
-  geom_bar(stat = "identity", position = position_dodge(), las=2) +
+ggplot(tab, aes(x = age, y = Freq, fill = factor(sport))) +
+  geom_bar(stat = "identity", position = position_dodge()) +
   ylab("Pourcentage") +
-  scale_x_discrete(breaks=seq(17,97,3), labels = seq(17,97,3)) +
-  scale_y_continuous(limit=c(0,3.3))
+  scale_x_discrete(breaks = seq(15,100,5), labels = seq(15,100,5)) +
+  scale_y_continuous(limit = c(0, 3.5))
 ```
 
 <br/>
@@ -2909,9 +2909,7 @@ data(rp2012)
 Pour tracer un nuage de points, utilisez la **fonction** **<span style="color:#8C001A">plot()</span> :**
 
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
-
-plot(rp2012$cadres, rp2012$dipl_sup)
-
+plot(x = rp2012$dipl_sup, y = rp2012$cadres)
 ```
 
 <br/>
@@ -2921,16 +2919,17 @@ Il est possible de **personnaliser le graphique...**
 ```{r class.source="bg-info", class.output="bg-warning", warning=TRUE, message=FALSE, fig.width=5, fig.height=5}
 
 par(bg = "ivory", mar = c(2,2,2,2), family="")
-plot(x = rp2012$cadres, y = rp2012$dipl_sup, asp = 1, pch = 21, col = "white", 
+plot(x = rp2012$dipl_sup, y = rp2012$cadres, asp = 1, pch = 21, col = "white", 
      ylim = c(0,60), cex = 0.5, bg = "red", lwd = 0.5, axes = F)
-axis(side = 1, at = seq(from = 0,to = 60, by = 10), cex.axis = 0.8,
-     pos = 0, tck=-0.01, padj = -1)
 axis(side = 2, at = seq(from = 0,to = 60, by = 10), cex.axis = 0.8,
-     labels = c("", seq(from = 10,to = 60, by = 10) ), pos = 0, tck=-0.01, las = 2)
+     pos = 0, tck = -0.01, las = 2)
+axis(side = 1, at = seq(from = 0,to = 60, by = 10), cex.axis = 0.8,
+     labels = c("", seq(from = 10,to = 60, by = 10) ), pos = 0, 
+     tck = -0.01, padj = -1)
 mtext(text = "Relation entre niveau d'étude et CSP", side = 3, line = 0.75,
       adj = 0,font = 4)
-mtext(text = "Diplômés du supérieur (%)", side = 2, line = 1)
-mtext(text = "Cadres (%)", side = 1, line = 1)
+mtext(text = "Diplômés du supérieur (%)", side = 1, line = 1)
+mtext(text = "Cadres (%)", side = 2, line = 1)
 
 ```
 
@@ -3049,35 +3048,14 @@ text(6, 55, "y = 1.08x + 0.92", col="red")
 **Les résidus d’une régression expriment l’écart entre les valeurs observées et les valeurs prédites par le modèle**.
 Plus un individu aura des résidus forts (positifs ou négatif), moins sa position sera expliquée par le modèle. Il faudra alors trouver d’autres facteurs explicatifs.
 
-**Calculer les résidus :**
-
+**Représenter les résidus :**
 ```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
-
 # Regression lineaire
 my_reg <- lm(rp2012$cadres ~ rp2012$dipl_sup)
-
-# Construction d'un data.frame des résidus normalisés
-residus <- data.frame(scaledRes = scale(my_reg$residuals), nom = row.names(rp2012))
-
+plot(my_reg, which = c(1), col=c("blue"))
+plot(my_reg, which = c(3), col=c("blue"))
 ```
 
-**Représenter les résidus :**
-
-```{r class.source="bg-info", class.output="bg-warning", warning=FALSE, message=FALSE}
-# on ne garde que le nom des individus ayant des résidus trés élevés (sup à 4 ecarts-type)
-residus[residus$scaledRes < 4 & residus$scaledRes > -4, "nom"] <- NA
-
-# affichage des résidus
-plot(residus$scaledRes, cex = .5, pch = 20, ylim=c(-5,5))
-# intervalles exprimés en ecart-type
-abline(h = 0, lwd = 2, col = "red")     
-abline(h = 4, lty = 2)
-abline(h = -4, lty = 2)
-# affichage du nom des individus extraordinaires
-text(x= 1:nrow(residus), y = residus$scaledRes, labels = residus$nom, pos = 4, 
-     cex = 0.7, offset = c(.2,0), font = 2)
-
-```
 
 <br/> 
 
